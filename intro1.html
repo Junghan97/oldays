@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oldays - 독거노인 소개</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+
+        }
+
+        /* 헤더 스타일 */
+        .custom-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: none; /* 배경 제거 */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.7); /* 얇은 흰색 선 */
+        }
+
+        .logo {
+            font-size: 50px; /* 크기를 기존 24px에서 32px로 증가 */
+            font-weight: bold;
+            font-family: 'Courgette', cursive;
+            margin-left: 20px; /* 왼쪽 간격 추가로 살짝 오른쪽으로 이동 */
+        }
+
+        .logo-link {
+            text-decoration: none;
+            color: rgba(38, 94, 50, 0.795); /* 로고 텍스트 색상 유지 */
+        }
+        /* 네비게이션 메뉴 스타일 */
+        .menu-list {
+            display: flex; /* 가로 정렬 */
+            justify-content: center; /* 중앙 정렬 */
+            gap: 100px; /* 항목 간 간격 */
+            list-style: none; /* 기본 리스트 스타일 제거 */
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-link {
+            text-decoration: none; /* 밑줄 제거 */
+            font-size: 18px; /* 폰트 크기 */
+            font-weight: NORMAL; /* 볼드체 */
+            font-family: 'GmarketSansMedium';
+            color: rgb(0, 0, 0); /* 흰색 폰트 */
+            transition: color 0.3s ease; /* 색상 변화 효과 */
+        }
+
+        .menu-link:hover {
+            color: rgba(38, 94, 50, 0.795); /* 호버 시 색상 변경 (주황색 계열) */
+        }
+
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            z-index: 1000;
+            font-family: 'NEXON Lv1 Gothic OTF', sans-serif;
+        }
+
+        .dropdown-content li {
+            margin: 0;
+        }
+
+        .dropdown-content li a {
+            text-decoration: none;
+            color: black; /* 네모 기호(☐) 제거 */
+            font-size: 14px;
+            display: block;
+            padding: 10px 15px;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-content li a:hover {
+            background: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        @font-face {
+            font-family: 'NEXON Lv1 Gothic OTF';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* 로그인 버튼 스타일 */
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            margin-right: 100px;
+            font-family: 'NEXON Lv1 Gothic OTF', sans-serif;
+        }
+
+        .login-btn {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid rgb(0, 0, 0);
+            padding: 8px 15px;
+            border-radius: 0px;
+            transition: all 0.3s ease;
+            background-color: none;
+            gap: 8px;
+        }
+
+        .login-btn:hover {
+            background-color: none;
+            color: rgb(0, 0, 0);
+        }
+
+        /* 자물쇠 아이콘 스타일 */
+        .lock-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Main container styling */
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            background-color: #f9f9f9;
+        }
+
+        /* Content styling */
+        .content {
+            text-align: center;
+            max-width: 650px;
+            padding: 30px;
+            margin: 20px;
+            margin-top: 70px;
+        }
+
+        /* Image styling */
+        .main-image {
+            width: 100%;
+            max-width: 500px; /* Further increased size */
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        /* Title styling */
+        .title {
+            font-family: 'Sunflower', sans-serif;
+            font-size: 30px; /* Further increased font size */
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* '독거노인'에 다른 색상 적용 */
+        .title .highlight {
+            color: rgba(38, 94, 50, 0.795); /* 초록색 */
+        }
+
+        /* '이란' 기본 색상 적용 */
+        .title .default {
+            color: #000000; /* 검정색 */
+        }
+
+
+        /* Description styling */
+        .description {
+            font-family: 'Sunflower', sans-serif;
+            font-size: 20px; /* Further increased font size */
+            font-weight: 50;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+    </style>
+</head>
+<body>
+        <!-- 헤더 -->
+        <header class="custom-header">
+            <div class="logo">
+                <a href="index.html" class="logo-link">Oldays</a>
+            </div>
+            <nav class="menu">
+                <ul class="menu-list">
+                    <li class="dropdown">
+                        <a href="#" class="menu-link">소개</a>
+                        <ul class="dropdown-content">
+                            <li><a href="intro1.html">독거노인 소개</a></li>
+                            <li><a href="intro2.html">기능소개</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="stats1.html" class="menu-link">통계</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="forecast2.html" class="menu-link">동향</a>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+           <div class="auth-buttons">
+            <a href="login.html" class="login-btn">
+                <img src="login_img_black.png" alt="Lock Icon" class="lock-icon">
+                로그인
+            </a>
+        </div>
+        </header>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="main-container">
+        <div class="content">
+            <img src="image2.png" alt="독거노인 이미지" class="main-image">
+            <h2 class="title">
+                <span class="highlight">독거노인</span> <span class="default">이란?</span>
+            </h2>
+                <p class="description">
+                "독거노인"은 혼자 살고 있는 노인을 의미하는 표현입니다.<br>
+                일반적으로 가족이나 다른 사람과 함께 살지 않고 혼자<br>
+                생활하는 노인들을 지칭하는 용어입니다.<br>
+                이러한 노인들은 사회적 고립, 경제적 어려움, 건강 문제 등<br>
+                다양한 어려움을 겪을 수 있어,<br>
+                이들의 지원과 돌봄이 중요하게 여겨집니다.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

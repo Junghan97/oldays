@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oldays - 독거노인을 위한 플랫폼</title>
+  <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+      flex-direction: column;
+    }
+
+    /* 배경 추가 */
+    .background {
+  position: absolute;
+  top: 90px; /* 헤더의 높이를 설정 */
+  left: 0;
+  width: 100%;
+  height: calc(100% - 80px); /* 배경의 높이를 전체에서 헤더 높이를 뺀 값으로 설정 */
+  background: url('aiimage2.avif') no-repeat center center fixed;
+  background-size: cover;
+  z-index: -1; /* 배경이 다른 내용 뒤에 오도록 설정 */
+}
+
+
+    .container {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      margin-bottom: 20px;
+      flex-direction: column;
+      width: 500px; /* 박스 크기 설정 */
+      background-color: rgba(255, 255, 255, 0.5); /* 배경을 투명하게 설정 */
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0);
+    }
+
+    .title {
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: white;
+    }
+
+    select {
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: skyblue;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    #result {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 50px;
+      color: white;
+    }
+
+    /* 헤더 스타일 */
+    .custom-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        background: none; /* 배경 제거 */
+        border-bottom: 1px solid rgba(0, 0, 0, 0.7); /* 얇은 흰색 선 */
+    }
+
+    .logo {
+        font-size: 50px; /* 크기를 기존 24px에서 32px로 증가 */
+        font-weight: bold;
+        font-family: 'Courgette', cursive;
+        margin-left: 20px; /* 왼쪽 간격 추가로 살짝 오른쪽으로 이동 */
+    }
+
+    .logo-link {
+        text-decoration: none;
+        color: rgba(38, 94, 50, 0.795); /* 로고 텍스트 색상 유지 */
+    }
+
+    /* 네비게이션 메뉴 스타일 */
+    .menu-list {
+        display: flex; /* 가로 정렬 */
+        justify-content: center; /* 중앙 정렬 */
+        gap: 100px; /* 항목 간 간격 */
+        list-style: none; /* 기본 리스트 스타일 제거 */
+        margin: 0;
+        padding: 0;
+    }
+
+    .menu-link {
+        text-decoration: none; /* 밑줄 제거 */
+        font-size: 18px; /* 폰트 크기 */
+        font-weight: NORMAL; /* 볼드체 */
+        font-family: 'GmarketSansMedium';
+        color: rgb(0, 0, 0); /* 흰색 폰트 */
+        transition: color 0.3s ease; /* 색상 변화 효과 */
+    }
+
+    .menu-link:hover {
+        color: rgba(38, 94, 50, 0.795); /* 호버 시 색상 변경 (주황색 계열) */
+    }
+
+    @font-face {
+        font-family: 'GmarketSansMedium';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .dropdown {
+        position: relative;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        list-style: none;
+        padding: 10px 0;
+        margin: 0;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        min-width: 150px;
+        z-index: 1000;
+        font-family: 'NEXON Lv1 Gothic OTF', sans-serif;
+    }
+
+    .dropdown-content li {
+        margin: 0;
+    }
+
+    .dropdown-content li a {
+        text-decoration: none;
+        color: black; /* 네모 기호(☐) 제거 */
+        font-size: 14px;
+        display: block;
+        padding: 10px 15px;
+        transition: background 0.3s ease;
+    }
+
+    .dropdown-content li a:hover {
+        background: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    @font-face {
+        font-family: 'NEXON Lv1 Gothic OTF';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    /* 로그인 버튼 스타일 */
+    .auth-buttons {
+        display: flex;
+        align-items: center;
+        margin-right: 100px;
+        font-family: 'NEXON Lv1 Gothic OTF', sans-serif;
+    }
+
+    .login-btn {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+        font-size: 14px;
+        font-weight: bold;
+        border: 1px solid rgb(0, 0, 0);
+        padding: 8px 15px;
+        border-radius: 0px;
+        transition: all 0.3s ease;
+        background-color: none;
+        gap: 8px;
+    }
+
+    .login-btn:hover {
+        background-color: none;
+        color: rgb(0, 0, 0);
+    }
+
+    /* 자물쇠 아이콘 스타일 */
+    .lock-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .select-group {
+      margin-bottom: 20px;
+    }
+
+    select {
+      padding: 10px;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+
+    .year-select {
+      margin-top: 10px;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 50px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+    <!-- 배경 이미지 추가 -->
+    <div class="background"></div>
+
+    <!-- 헤더 -->
+    <header class="custom-header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">Oldays</a>
+        </div>
+        <nav class="menu">
+            <ul class="menu-list">
+                <li class="dropdown">
+                    <a href="#" class="menu-link">소개</a>
+                    <ul class="dropdown-content">
+                        <li><a href="intro1.html">독거노인 소개</a></li>
+                        <li><a href="intro2.html">기능소개</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="stats1.html" class="menu-link">통계</a>
+                </li>
+                <li class="dropdown">
+                    <a href="forecast2.html" class="menu-link">동향</a>
+                </li>
+            </ul>
+        </nav>
+       <div class="auth-buttons">
+        <a href="login.html" class="login-btn">
+            <img src="login_img_black.png" alt="Lock Icon" class="lock-icon">
+            로그인
+        </a>
+    </div>
+    </header>
+
+    <div class="container">
+      <div class="title">독거노인 인구수 예측</div>
+      <div class="box">
+        <h3>연도 선택</h3>
+        <select id="year-select">
+          <option value="2025">2025년</option>
+          <option value="2030">2030년</option>
+          <option value="2035">2035년</option>
+          <option value="2040">2040년</option>
+          <option value="2045">2045년</option>
+          <option value="2050">2050년</option>
+          <option value="2055">2055년</option>
+          <option value="2060">2060년</option>
+          <option value="2065">2065년</option>
+          <option value="2070">2070년</option>
+        </select>
+      </div>
+    </div>
+  
+    <button onclick="showResult()">동향 확인하기</button>
+  
+    <div id="result"></div>
+  
+    <script>
+      // 연도별 데이터 (예시 값)
+      const data = {
+        "elderly-count": {
+          "2025": 2367619,
+          "2030": 3.080727e+06,
+          "2035": 3.748005e+06,
+          "2040": 4.443099e+06,
+          "2045": 4.899547e+06,
+          "2050": 5.214118e+06,
+          "2055": 5.244457e+06,
+          "2060": 5.316407e+06,
+          "2065": 5.326878e+06,
+          "2070": 5.231445e+06,
+        }
+      };
+  
+      // 동향 결과를 출력하는 함수
+      function showResult() {
+        const year = document.getElementById("year-select").value;
+  
+        // 선택한 연도에 해당하는 값 찾기
+        const value = data["elderly-count"][year];
+  
+        // 결과를 페이지에 출력
+        let resultText = `${year}년도 독거노인 수는 ${value}명 입니다.`;
+        document.getElementById("result").innerText = resultText;
+      }
+    </script>
+</body>  
+</html>

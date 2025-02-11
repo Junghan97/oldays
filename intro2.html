@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>독거노인 분석 페이지</title>
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+            box-sizing: border-box;
+
+        }
+
+        /* 헤더 스타일 */
+        .custom-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: #ffffff; /* 배경 제거 */
+            border-bottom: 1px solid rgba(0, 0, 0, 0.7); /* 얇은 흰색 선 */
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 50px; /* 크기를 기존 24px에서 32px로 증가 */
+            font-weight: bold;
+            font-family: 'Courgette', cursive;
+            margin-left: 20px; /* 왼쪽 간격 추가로 살짝 오른쪽으로 이동 */
+        }
+
+        .logo-link {
+            text-decoration: none;
+            color: rgba(38, 94, 50, 0.795); /* 로고 텍스트 색상 유지 */
+        }
+        /* 네비게이션 메뉴 스타일 */
+        .menu-list {
+            display: flex; /* 가로 정렬 */
+            justify-content: center; /* 중앙 정렬 */
+            gap: 100px; /* 항목 간 간격 */
+            list-style: none; /* 기본 리스트 스타일 제거 */
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-link {
+            text-decoration: none; /* 밑줄 제거 */
+            font-size: 18px; /* 폰트 크기 */
+            font-weight: NORMAL; /* 볼드체 */
+            font-family: 'GmarketSansMedium';
+            color: rgb(0, 0, 0); /* 흰색 폰트 */
+            transition: color 0.3s ease; /* 색상 변화 효과 */
+        }
+
+        .menu-link:hover {
+            color: rgba(38, 94, 50, 0.795); /* 호버 시 색상 변경 (주황색 계열) */
+        }
+
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            z-index: 1000;
+            font-family: 'NEXON Lv1 Gothic OTF', sans-serif;
+        }
+
+        .dropdown-content li {
+            margin: 0;
+        }
+
+        .dropdown-content li a {
+            text-decoration: none;
+            color: black; /* 네모 기호(☐) 제거 */
+            font-size: 14px;
+            display: block;
+            padding: 10px 15px;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-content li a:hover {
+            background: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        @font-face {
+            font-family: 'NEXON Lv1 Gothic OTF';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* 로그인 버튼 스타일 */
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            margin-right: 100px;
+            font-family: 'NEXON Lv1 Gothic OTF', sans-serif;
+        }
+
+        .login-btn {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: rgb(0, 0, 0);
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid rgb(0, 0, 0);
+            padding: 8px 15px;
+            border-radius: 0px;
+            transition: all 0.3s ease;
+            background-color: none;
+            gap: 8px;
+        }
+
+        .login-btn:hover {
+            background-color: none;
+            color: rgb(0, 0, 0);
+        }
+
+        /* 자물쇠 아이콘 스타일 */
+        .lock-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* 주요 기능 섹션 스타일 */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2em;
+            padding: 100px 5%;
+            background-color: #ffffff;
+            margin-top: 100px; /* 섹션을 아래로 이동 */
+        }
+
+        .feature {
+            background-color: #ffffff;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            flex: 1 1 calc(25% - 2em); /* 4개의 박스를 한 줄에 배치 */
+            max-width: 300px; /* 박스 최대 너비 */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* 그림자 효과 추가 */
+        }
+    
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-text h3 {
+            font-size: 1.8em;
+            color: rgba(38, 94, 50, 0.795);
+            margin-bottom: 1em;
+        }
+
+        .feature-text p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 1em;
+        }
+
+        /* 반응형 스타일 */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1.1em;
+            }
+
+            .features {
+                padding: 3em 2%;
+            }
+
+            .feature {
+                padding: 1.5em;
+            }
+
+            .feature-text h3 {
+                font-size: 1.6em;
+            }
+
+            .feature-text p {
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+       <!-- 헤더 -->
+       <header class="custom-header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">Oldays</a>
+        </div>
+        <nav class="menu">
+            <ul class="menu-list">
+                <li class="dropdown">
+                    <a href="#" class="menu-link">소개</a>
+                    <ul class="dropdown-content">
+                        <li><a href="intro1.html">독거노인 소개</a></li>
+                        <li><a href="intro2.html">기능소개</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="stats1.html" class="menu-link">통계</a>
+                </li>
+                <li class="dropdown">
+                    <a href="forecast2.html" class="menu-link">동향</a>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+       <div class="auth-buttons">
+        <a href="login.html" class="login-btn">
+            <img src="login_img_black.png" alt="Lock Icon" class="lock-icon">
+            로그인
+        </a>
+    </div>
+    </header>
+
+
+    <!-- 주요 기능 섹션 -->
+    <div class="features">
+        <!-- 독거노인 인구 분석 -->
+        <div class="feature">
+            <div class="feature-text">
+                <h3>독거노인 인구 분석</h3>
+                <p>독거노인 인구를 분석하여 이들의 특성과 분포를 파악하고, 정책 및 서비스 개발에 중요한 통찰을 제공합니다.</p>
+                <p>이 분석을 통해 필요한 복지 자원 및 지원을 예측할 수 있습니다. 또한, 지역별 인구 특성에 맞춘 맞춤형 서비스 제공이 가능해집니다.</p>
+                <p>데이터 분석 결과를 바탕으로, 관련 정책을 수립하고 자원을 효율적으로 배분할 수 있습니다.</p>
+                <p>독거노인 인구의 증가 추세에 맞춰 필요한 사회적 지원을 예측하는 중요한 기능입니다.</p>
+            </div>
+            <div class="feature-image">
+                <img src="image3.png" alt="독거노인 인구 분석">
+            </div>
+        </div>
+
+        <!-- 독거노인 추이 예측 -->
+        <div class="feature">
+            <div class="feature-text">
+                <h3>독거노인 추이 예측</h3>
+                <p>독거노인의 추이를 예측하여 향후 발생할 문제에 대한 대응 계획을 세울 수 있습니다. 이를 통해 지속 가능한 복지 시스템을 구축할 수 있으며, 사회적 비용을 절감할 수 있습니다.</p>
+                <p>예측된 데이터를 기반으로 다양한 정책적 대응을 마련하여, 독거노인의 생활 향상을 돕습니다.</p>
+                <p>시간에 따른 변화를 반영한 예측을 통해, 빠르게 변화하는 사회적 요구에 맞는 대응을 할 수 있습니다.</p>
+                <p>추이 예측 기능은 장기적인 사회 복지 계획을 수립하는 데 매우 중요한 역할을 합니다.</p>
+            </div>
+            <div class="feature-image">
+                <img src="image4.png" alt="독거노인 추이 예측">
+            </div>
+        </div>
+        </div>
+    </div>
+
+</body>
+</html>

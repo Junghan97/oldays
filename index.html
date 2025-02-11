@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oldays - 독거노인을 위한 플랫폼</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 스타일 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+        }
+
+
+        /* 헤더 스타일 */
+        .custom-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: none; /* 배경 제거 */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.7); /* 얇은 흰색 선 */
+        }
+
+        .logo {
+            font-size: 50px; /* 크기를 기존 24px에서 32px로 증가 */
+            font-weight: bold;
+            font-family: 'Courgette', cursive;
+            margin-left: 20px; /* 왼쪽 간격 추가로 살짝 오른쪽으로 이동 */
+        }
+
+        .logo-link {
+            text-decoration: none;
+            color: white; /* 로고 텍스트 색상 유지 */
+        }
+        /* 네비게이션 메뉴 스타일 */
+        .menu-list {
+            display: flex; /* 가로 정렬 */
+            justify-content: center; /* 중앙 정렬 */
+            gap: 100px; /* 항목 간 간격 */
+            list-style: none; /* 기본 리스트 스타일 제거 */
+            margin: 0;
+            padding: 0;
+        }
+
+        .menu-link {
+            text-decoration: none; /* 밑줄 제거 */
+            font-size: 18px; /* 폰트 크기 */
+            font-weight: NORMAL; /* 볼드체 */
+            font-family: 'GmarketSansMedium';
+            color: white; /* 흰색 폰트 */
+            transition: color 0.3s ease; /* 색상 변화 효과 */
+        }
+
+        .menu-link:hover {
+            color: #5fbd83a8; /* 호버 시 색상 변경 (주황색 계열) */
+        }
+
+        @font-face {
+            font-family: 'GmarketSansMedium';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+            z-index: 1000;
+            font-family: 'NEXON Lv1 Gothic OTF', sans-serif;
+        }
+
+        .dropdown-content li {
+            margin: 0;
+        }
+
+        .dropdown-content li a {
+            text-decoration: none;
+            color: black; /* 네모 기호(☐) 제거 */
+            font-size: 14px;
+            display: block;
+            padding: 10px 15px;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-content li a:hover {
+            background: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        @font-face {
+            font-family: 'NEXON Lv1 Gothic OTF';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+
+        /* 로그인 버튼 스타일 */
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+            margin-right: 100px;
+            font-family: 'NEXON Lv1 Gothic OTF', sans-serif;
+        }
+
+        .login-btn {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            font-size: 14px;
+            font-weight: bold;
+            border: 1px solid rgb(255, 255, 255);
+            padding: 8px 15px;
+            border-radius: 0px;
+            transition: all 0.3s ease;
+            background-color: none;
+            gap: 8px;
+        }
+
+        .login-btn:hover {
+            background-color: rgb(255, 255, 255);
+            color: white;
+        }
+
+        /* 자물쇠 아이콘 스타일 */
+        .lock-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* 메인 페이지 첫 프레임 */
+        .hero-section {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+
+        /* 화면 중앙에 텍스트 */
+        .hero-text {
+            position: absolute;
+            color: white;
+            font-size: 36px;
+            text-align: center;
+            font-weight: bold;
+            z-index: 10;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* 플랫폼 문구 스타일 */
+        .platform-text {
+            font-family: 'STUNNING-Bd', sans-serif;
+            font-size: 60px; /* 필요 시 조정 */
+            opacity: 0;
+            animation: revealText 1s forwards;
+        }
+
+        /* Oldays 문구 스타일 */
+        .oldays-text {
+            font-family: 'Courgette', cursive;
+            font-size: 36px; /* 필요 시 조정 */
+            opacity: 0;
+            animation: revealText 1s forwards;
+        }
+
+        .hero-text span {
+            opacity: 0;
+            animation: revealText 1s forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+
+        /* nth-child로 애니메이션 딜레이 설정 */
+        .hero-text span:nth-child(1) { --i: 0; }
+        .hero-text span:nth-child(2) { --i: 1; }
+        .hero-text span:nth-child(3) { --i: 2; }
+        .hero-text span:nth-child(4) { --i: 3; }
+        .hero-text span:nth-child(5) { --i: 4; }
+        .hero-text span:nth-child(6) { --i: 5; }
+        .hero-text span:nth-child(7) { --i: 6; }
+        .hero-text span:nth-child(8) { --i: 7; }
+        .hero-text span:nth-child(9) { --i: 8; }
+        .hero-text span:nth-child(10) { --i: 9; }
+        .hero-text span:nth-child(11) { --i: 10; }
+        .hero-text span:nth-child(12) { --i: 11; }
+        .hero-text span:nth-child(13) { --i: 12; }
+        .hero-text span:nth-child(14) { --i: 13; }
+
+
+        @keyframes revealText {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 사용자 정의 폰트 추가 */
+        @font-face {
+            font-family: 'STUNNING-Bd';
+            src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-2@1.0/STUNNING-Bd.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        /* 기능 섹션 위에 추가될 텍스트 */
+        .intro-text {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .oldays-text {
+            display: block;
+            font-size: 48px;
+            margin-top: 90px; /* 이전 텍스트와의 간격 */
+            font-weight: bold;
+            opacity: 0.3;
+            animation: revealText 1s forwards;
+            animation-delay: calc(0.1s * 15); /* 'Oldays' 텍스트도 애니메이션 지연 */
+        }
+
+        /* 기능 섹션 */
+        .features {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 60px;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            width: 200px;
+            margin-bottom: 20px;
+            height: 280px;
+        }
+
+        .feature-card img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .feature-card h3 {
+            margin-top: 20px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .feature-card p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* 푸터 스타일 */
+        footer {
+            background-color: #A8E0A2;
+            padding: 20px 0;
+            text-align: center;
+            color: white;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+        }
+
+        footer a:hover {
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="custom-header">
+        <div class="logo">
+            <a href="index.html" class="logo-link">Oldays</a>
+        </div>
+        <nav class="menu">
+            <ul class="menu-list">
+                <li class="dropdown">
+                    <a href="#" class="menu-link">소개</a>
+                    <ul class="dropdown-content">
+                        <li><a href="intro1.html">독거노인 소개</a></li>
+                        <li><a href="intro2.html">기능소개</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="stats1.html" class="menu-link">통계</a>
+                </li>
+                <li class="dropdown">
+                    <a href="forecast2.html" class="menu-link">동향</a>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+       <div class="auth-buttons">
+        <a href="login.html" class="login-btn">
+            <img src="login_img_black.png" alt="Lock Icon" class="lock-icon">
+            로그인
+        </a>
+    </div>
+    </header>
+
+    <!-- 메인 페이지 첫 프레임 -->
+    <div class="hero-section">
+        <div class="carousel">
+            <div class="carousel-slide">
+                <img src="image1.png" alt="Image 1">
+            </div>
+            <div class="carousel-slide">
+                <img src="image7.png" alt="Image 2">
+            </div>
+            <div class="carousel-slide">
+                <img src="image8.png" alt="Image 3">
+            </div>
+        </div>
+        <div class="hero-text">
+            <!-- 독거노인을 위한 새로운 플랫폼 -->
+            <span class="platform-text">독</span>
+            <span class="platform-text">거</span>
+            <span class="platform-text">노</span>
+            <span class="platform-text">인</span>
+            <span class="platform-text">을 </span>&nbsp;
+            <span class="platform-text">위</span>
+            <span class="platform-text">한 </span>&nbsp;
+            <span class="platform-text">새</span>
+            <span class="platform-text">로</span>
+            <span class="platform-text">운 </span>&nbsp;
+            <span class="platform-text">플</span>
+            <span class="platform-text">랫</span>
+            <span class="platform-text">폼</span><br>
+    
+            <!-- Oldays -->
+            <span class="oldays-text">Oldays</span>
+        </div>
+    </div>
+
+    <script>
+        // 캐러셀 슬라이드 자동 이동
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+
+        function showNextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            document.querySelector('.carousel').style.transform = `translateX(-${currentSlide * 100}%)`;
+        }
+
+        setInterval(showNextSlide, 4000);
+    </script>
+
+    <!-- 기능 섹션 -->
+    <div class="intro-text">
+        <div class="oldays-text">Oldays</div>
+        <div class="description-text">
+            독거노인을 위한 더 나은 내일을 만들어갑니다.<br>
+            우리의 분석과 예측을 통해, 보다 안전하고 행복한 삶을 지원합니다.
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <img src="icon1.png" alt="Health Icon">
+            <h3>독거노인 인구 분석</h3>
+            <p>지역별 데이터를 통해 더 나은 복지 서비스 설계</p>
+            <a href="stats1.html" class="more-info-button">더 알아보기</a>
+        </div>
+        <div class="feature-card">
+            <img src="icon3.png" alt="Emergency Icon">
+            <h3>독거노인 인구 추이 예측</h3>
+            <p>미래를 예측하고, 독거노인의 삶을 미리 준비하는 지혜</p>
+            <a href="forecast2.html" class="more-info-button">더 알아보기</a>
+        </div>
+    </div>
+
+    <!-- 푸터 -->
+    <footer>
+        <p>&copy; 2025 Oldays. All Rights Reserved.</p>
+        <div>
+            <a href="privacy-policy.html">개인정보처리방침</a>
+            <a href="terms-of-service.html">이용약관</a>
+        </div>
+    </footer>
+</body>
+</html>
